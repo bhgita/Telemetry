@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Telemetry Data App</title>
+<meta name="author" content="Tanisha Bhatti">
+<style>
+table {
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+thead {
+    background-color: #ccc;
+}
+thead td {
+    width: 33%;
+}
+button {
+    padding: 10px;
+    background: #0c3d91;
+    color: #fff;
+}
+button:focus {
+    background: #000;
+    outline: none;
+    padding: 8px;
+    border-radius: 10px;
+}
+h4 {
+    color: #fc3e21;
+}
+.box {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    border: 1px solid #ccc;
+    background: #ddd;
+}
+</style>
+</head>
+<body>
+    <img src="./download.png"/>
+    <h1>Open MCT Telemetry Data App</h1>
+    <h4>Authored by Tanisha Bhatti</h4>
+    <h4>Copright @ Tanisha Bhatti, 2020</h4>
+
+    <div class="box">
+        <div>
+            <h2>History: Historical Data</h2>
+            <p>History: Query telemetry data for historical data of last 15 mins</p>
+            Double Click
+            <button onclick="initTable(getHistory.bind(null, 'pwr.c'))">Last 15 minutes query (pwr.c)</button>
+            <button onclick="initTable(getHistory.bind(null, 'pwr.v'))">Last 15 minutes query (pwr.v)</button>
+            <p>
+                Sort historical data:
+                <button onclick="initTable(getHistorialSortedData.bind(null, true))">Sort by Timestamp (Asc)</button>
+                <button onclick="initTable(getHistorialSortedData.bind(null, false))">Sort by Timestamp (Dsc)</button>
+            </p>
+        </div>
+        <div>
+           <h2>Realtime: Subscriptions Data</h2>
+           <p>Realtime: Subscribing to the realtime data</p>
+            <button onclick="openWebSocket()">Open WebSocket</button>
+            <button onclick="initTable(getTelemetry)">Load Data Table</button>
+            <button onclick="unsubscribeAll()">Close WebSocket</button>
+            
+            <p>Telemetry Points Filter: 
+                <button onclick="initTable(selectPwrv)">pwr.v</button>
+                <button onclick="initTable(selectPwrc)">pwr.c</button>
+                <button onclick="initTable(selectBoth)">pwr.c + pwr.v</button>
+            </p>
+            <p>
+                Sort Realtime data, while maintaining last selected sort order on load data:<br/>
+                <button onclick="initTable(getSortedData.bind(null, true))">Sort by Timestamp (Asc)</button>
+                <button onclick="initTable(getSortedData.bind(null, false))">Sort by Timestamp (Dsc)</button>
+            </p>
+        </div>
+    </div> 
+    
+    <h2>History or Realtime Data Table</h2>
+    <table id="space-data-table">
+        <thead>
+            <td>ID</td>
+            <td>Timestamp</td>
+            <td>Value</td>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script src="./telemetry.js"></script>
+
+</body>
+</html>
